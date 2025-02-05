@@ -1,140 +1,147 @@
-/* Reset de base */
+/* ===== VARIABLES ===== */
+:root {
+  --primary-color: #6e6ec7;
+  --primary-color-hover: #5d5db0;
+  --background-light: #e8e8e8;
+  --text-color: #333;
+  --border-color: #ddd;
+  --spacing-sm: 5px;
+  --spacing-md: 10px;
+  --spacing-lg: 20px;
+  --border-radius: 8px;
+  --container-width: 600px;
+}
+
+/* ===== RESET ===== */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  html, body {
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-  }
-  
-  /* Variables CSS */
-  :root {
-    --primary-color: #6e6ec7;
-    --background-light: #e8e8e8;
-    --gap-size: 20px;
-  }
-  
-  h1 {
-    text-align: center;
-    margin-top: 2vh;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  /* Container principal */
-  .container {
-    display: flex;
-    gap: var(--gap-size);
-    padding: var(--gap-size);
-    width: 100%;
-    overflow: auto;
-  }
-  
-  /* Colonnes avec répartition 2/3 - 1/3 */
-  .column1 {
-    flex: 3;
-    min-width: 300px;
-  }
-  
-  .column2 {
-    flex: 1;
-    min-width: 300px;
-    padding: var(--gap-size);
-  }
-  
-  
-  /* Carte */
-  #map {
-    width: 100%;
-    height: 80vh;
-    min-height: 300px;
-    position: relative;
-    z-index: 1;
-  }
-  
-  /* Formulaire */
-  label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  input {
-    width: 100%;
-    padding: 8px;
-    font-size: 16px; /* Évite le zoom sur mobile */
-  }
-  
-  #add_spot {
-    margin: 10px 0;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-    width: auto;
-    background-color: var(--primary-color);
-    color: white;
-  }
-  
-  #add_spot:hover {
-    background-color: var(--primary-color);
-  }
-  
-  /* Media Queries */
-  @media (max-width: 768px) {
-    .container {
-      flex-direction: column;
-      gap: 10px;
-      padding: 10px;
-    }
-  
-    .column1, .column2 {
-      min-width: 100%;
-    }
-  
-    #map {
-      height: 50vh;
-      min-height: 250px;
-    }
-  }
-  
-  /* Optimisations Leaflet */
-  .leaflet-container {
-    background: var(--background-light) !important;
-  }
-  
-  .leaflet-control-attribution {
-    font-size: 0.8rem !important;
-  }
-  
-  .leaflet-touch .leaflet-control-zoom {
-    margin-right: 10px !important;
-    margin-bottom: 10px !important;
-  }
-  
-  #form {
-    margin: 10px 0;
-  }
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
 
-  /* styles.css */
+/* ===== LAYOUT ===== */
+.container {
+  display: flex;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  width: 100%;
+  overflow: auto;
+}
+
+.column1 {
+  flex: 3;
+  min-width: 300px;
+}
+
+.column2 {
+  flex: 1;
+  min-width: 300px;
+  padding: var(--spacing-lg);
+}
+
+/* ===== TYPOGRAPHY ===== */
+h1 {
+  text-align: center;
+  margin-top: 2vh;
+  color: var(--text-color);
+}
+
+/* ===== MAP ===== */
+#map {
+  width: 100%;
+  height: 80vh;
+  min-height: 300px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== FORM ===== */
+#placeForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+label {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+}
+
+button[type="submit"] {
+  margin: var(--spacing-md) 0;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: var(--primary-color-hover);
+}
+
+/* ===== IMAGE UPLOAD ===== */
+.upload-button {
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: var(--primary-color);
+  color: white;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  display: inline-block;
+}
+
+.upload-button:hover {
+  background-color: var(--primary-color-hover);
+}
+
+#preview {
+  display: block;
+  max-width: 500px;
+  margin-top: var(--spacing-lg);
+}
+
+/* ===== POPUP STYLES ===== */
+.leaflet-popup {
+  min-width: var(--container-width);
+}
+
+.leaflet-popup-content-wrapper {
+  width: auto;
+  min-width: var(--container-width);
+  padding: var(--spacing-lg);
+}
+
+.leaflet-popup-content {
+  width: 400px !important;
+  margin: 13px 24px !important;
+}
+
+/* ===== PLACE DETAILS ===== */
 .place-details {
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  max-width: var(--container-width);
+  margin: var(--spacing-lg) auto;
+  padding: var(--spacing-lg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
 }
 
 .info-line {
-  margin: 10px 0;
-}
-
-h1 {
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.info {
+  margin: var(--spacing-md) 0;
   line-height: 1.6;
 }
 
@@ -143,37 +150,40 @@ h1 {
   color: #666;
 }
 
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+  }
 
-.upload-button {
-  padding: 10px 20px;
-  background-color: var(--primary-color);
-  color: white;
-  cursor: pointer;
-  border-radius: 5px;
-  display: inline-block;
+  .column1, 
+  .column2 {
+    min-width: 100%;
+  }
+
+  #map {
+    height: 50vh;
+    min-height: 250px;
+  }
+
+  .leaflet-popup,
+  .leaflet-popup-content-wrapper {
+    min-width: 300px;
+  }
 }
 
-.upload-button:hover {
-  background-color: var(--primary-color); 
+/* ===== LEAFLET OVERRIDES ===== */
+.leaflet-container {
+  background: var(--background-light) !important;
 }
 
-#preview {
-  display: block;
-  margin-top: 20px;
+.leaflet-control-attribution {
+  font-size: 0.8rem !important;
 }
 
-.leaflet-popup-content {
-  width: 400px !important;
-  margin: 13px 24px !important;
+.leaflet-touch .leaflet-control-zoom {
+  margin-right: var(--spacing-md) !important;
+  margin-bottom: var(--spacing-md) !important;
 }
-
-.leaflet-popup {
-  min-width: 600px;
-}
-
-.leaflet-popup-content-wrapper {
-  width: auto;
-  min-width: 600px;
-  padding: 20px;
-}
-
