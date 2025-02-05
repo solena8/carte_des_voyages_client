@@ -72,6 +72,8 @@ function createPopupContent(place) {
       <div class="popup-info" style="flex: 1; padding-right: 10px;">
         ${createInfoContent(place)}
       </div>
+      <div class="popup-delete" style="flex: 0 0 250px;">
+        ${createDeleteButton(place)}
     </div>
   `;
 }
@@ -84,6 +86,56 @@ function createImageElement(place) {
          style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
   `;
 }
+
+function createDeleteButton(place) {
+  return `
+    <button 
+      onclick="deletePlace(${place.id})" 
+      class="delete-button" 
+      style="background-color: #ff4444; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">
+      Supprimer
+    </button>
+  `;
+}
+
+async function deletePlace(id) {
+  if (!confirm('Êtes-vous sûr de vouloir supprimer ce lieu ?')) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/places/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      // Récupérer le conteneur de la carte
+      const container = L.DomUtil.get('map');
+      
+      // Nettoyer l'ID Leaflet existant
+      if (container._leaflet_id) {
+        container._leaflet_id = null;
+      }
+      
+      // Réinitialiser la carte
+      const map = initializeMap();
+      
+      // Recharger les marqueurs
+      await loadPlaces(map);
+    } else {
+      throw new Error('Erreur lors de la suppression');
+    }
+  } catch (error) {
+    console.error('Erreur:', error);
+    alert('Une erreur est survenue lors de la suppression');
+  }
+}
+
+
+
 
 // Création du placeholder pour le popup sans image
 function createPlaceholderElement() {
