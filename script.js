@@ -7,6 +7,14 @@ const MAP_CONFIG = {
   attribution: "© OpenStreetMap contributors"
 };
 
+// Variables globales pour stocker les données de l'adresse
+let selectedLocation = {
+  city: '',
+  country: '',
+  latitude: null,
+  longitude: null
+};
+
 // Initialisation au chargement du DOM
 document.addEventListener("DOMContentLoaded", initializeApp);
 
@@ -14,6 +22,7 @@ document.addEventListener("DOMContentLoaded", initializeApp);
 function initializeApp() {
   const map = initializeMap();
   initializeImageUpload();
+  GeocodingService.initializeAddressSearch();
   initializeFormSubmission(map);
   loadPlaces(map);
 }
@@ -33,11 +42,21 @@ function initializeMap() {
 function initializeImageUpload() {
   const imageUpload = document.getElementById("imageUpload");
   const uploadLabel = document.querySelector('label[for="imageUpload"]');
+  const preview = document.getElementById("preview");
 
   imageUpload.addEventListener("change", (event) => {
-    uploadLabel.textContent = event.target.files.length > 0 
-      ? "Image sélectionnée" 
-      : "Choisir une image";
+    if (event.target.files.length > 0) {
+      uploadLabel.textContent = "Image sélectionnée";
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    } else {
+      uploadLabel.textContent = "Choisir une image";
+      preview.style.display = 'none';
+    }
   });
 }
 
@@ -97,7 +116,23 @@ async function loadPlaces(map) {
     const places = await response.json();
     if (!places || places.length === 0) return;
 
-    places.forEach(place => addPlaceMarker(place, map));
+    // Créer un groupe de marqueurs
+    const markers = [];
+
+    places.forEach(place => {
+      if (place.latitude && place.longitude) {
+        const marker = addPlaceMarker(place, map);
+        markers.push([place.latitude, place.longitude]);
+      }
+    });
+
+    // S'il y a des marqueurs, ajuster la vue
+    if (markers.length > 0) {
+      map.fitBounds(markers, {
+        padding: [50, 50], // Ajoute une marge autour des marqueurs
+        maxZoom: 15        // Limite le zoom maximum
+      });
+    }
   } catch (error) {
     console.error("Erreur:", error);
   }
@@ -105,9 +140,9 @@ async function loadPlaces(map) {
 
 // Ajout d'un marqueur sur la carte
 function addPlaceMarker(place, map) {
-  if (!place.latitude || !place.longitude) return;
+  if (!place.latitude || !place.longitude) return null;
 
-  L.marker([place.latitude, place.longitude])
+  const marker = L.marker([place.latitude, place.longitude])
     .addTo(map)
     .bindPopup(createPopupContent(place), {
       maxWidth: 300,
@@ -115,6 +150,8 @@ function addPlaceMarker(place, map) {
       autoClose: true,
       closeOnClick: true,
     });
+
+  return marker;
 }
 
 // Initialisation de la soumission du formulaire
@@ -126,13 +163,19 @@ function initializeFormSubmission(map) {
 // Gestion de la soumission du formulaire
 async function handleFormSubmit(event, map) {
   event.preventDefault();
+  
+  if (!selectedLocation.latitude || !selectedLocation.longitude) {
+    alert("Veuillez sélectionner une adresse valide");
+    return;
+  }
+
   const data = collectFormData();
   const imageFile = document.getElementById("imageUpload").files[0];
 
   if (imageFile) {
-    handleSubmitWithImage(data, imageFile, map);
+    await handleSubmitWithImage(data, imageFile, map);
   } else {
-    handleSubmitWithoutImage(data, map);
+    await handleSubmitWithoutImage(data, map);
   }
 }
 
@@ -141,16 +184,16 @@ function collectFormData() {
   return {
     name: document.getElementById("name").value,
     date: document.getElementById("date").value,
-    city: document.getElementById("city").value,
-    country: document.getElementById("country").value,
-    latitude: parseFloat(document.getElementById("latitude").value),
-    longitude: parseFloat(document.getElementById("longitude").value),
+    city: selectedLocation.city,
+    country: selectedLocation.country,
+    latitude: selectedLocation.latitude,
+    longitude: selectedLocation.longitude,
     image: null
   };
 }
 
 // Soumission avec image
-function handleSubmitWithImage(data, imageFile, map) {
+async function handleSubmitWithImage(data, imageFile, map) {
   const reader = new FileReader();
   reader.readAsDataURL(imageFile);
   reader.onload = async () => {
