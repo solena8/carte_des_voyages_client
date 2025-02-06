@@ -4,9 +4,9 @@ import { PopupService } from "../components/popup.js";
 export class MapService {
   static initializeMap() {
     const map = L.map("map", {
-      dragging: true, // Active le glisser-déposer
-      scrollWheelZoom: true, // Active le zoom avec la molette
-      tap: true, // Active la fonctionnalité tactile
+      dragging: true, 
+      scrollWheelZoom: true, 
+      tap: true, 
     }).setView(CONFIG.MAP.center, CONFIG.MAP.zoom);
 
     L.tileLayer(CONFIG.MAP.tileLayer, {

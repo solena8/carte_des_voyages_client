@@ -217,7 +217,6 @@ button[type="submit"]:hover {
   background-color: var(--background-light);
 }
 
-/* Position relative pour le conteneur du champ adresse */
 .form-field {
   position: relative;
 }
