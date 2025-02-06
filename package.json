@@ -1,0 +1,16 @@
+{
+  "name": "solena_et_tug_map",
+  "version": "1.0.0",
+  "description": "map of travels",
+  "main": "mainjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/solena8/carte_des_lits_client.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://github.com/solena8/carte_des_lits_back#readme"
+}
