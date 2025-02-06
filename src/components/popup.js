@@ -41,7 +41,6 @@ export class PopupService {
       <p style="margin: 8px 0;"><strong>Ville:</strong> ${place.city}</p>
       <p style="margin: 8px 0;"><strong>Pays:</strong> ${place.country}</p>
       <p style="margin: 8px 0;"><strong>Date:</strong> ${place.date}</p>
-      <p style="margin: 8px 0;"><strong>Coordonnées:</strong> ${place.latitude}, ${place.longitude}</p>
     `;
   }
 

@@ -58,9 +58,10 @@ export class GeocodingService {
       div.textContent = result.label;
 
       div.addEventListener("click", () => {
+        console.log("Result from geocoding:", result); 
         addressInput.value = result.label;
         Object.assign(SELECTED_LOCATION, {
-          city: result.city || "",
+          city: result.locality || "",
           country: result.country || "",
           latitude: result.latitude,
           longitude: result.longitude,

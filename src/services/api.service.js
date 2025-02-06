@@ -5,7 +5,7 @@ import { MapService } from './map.service.js';
 export class ApiService {
   static async loadPlaces(map) {
     try {
-      const response = await fetch(API_CONFIG.MAIN.URL);
+      const response = await fetch(`${API_CONFIG.MAIN.URL}/places/`);
       if (!response.ok)
         throw new Error(`HTTP error! status: ${response.status}`);
 
@@ -14,6 +14,7 @@ export class ApiService {
 
       const markers = [];
       places.forEach((place) => {
+        place.date = new Date(place.date).toLocaleDateString();
         if (place.latitude && place.longitude) {
           const marker = MapService.addMarker(place, map);
           markers.push([place.latitude, place.longitude]);

@@ -12,6 +12,8 @@ export class FormHandler {
   }
 
   static async handleFormSubmit(event, map) {
+    console.log('Form submission data:', this.collectFormData());
+
     event.preventDefault();
 
     if (!SELECTED_LOCATION.latitude || !SELECTED_LOCATION.longitude) {
@@ -52,6 +54,6 @@ export class FormHandler {
   static showSuccessMessage(result) {
     document.getElementById(
       "responseMessage"
-    ).innerText = `Lieu ajouté : ${result.name} en ${result.city}, ${result.country}`;
+    ).innerText = `Lieu ajouté : ${result.name} à ${result.city}, ${result.country}`;
   }
 }
