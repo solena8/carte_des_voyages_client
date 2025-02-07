@@ -174,3 +174,8 @@ form button {
     min-height: 250px;
   }
 }
+
+.leaflet-popup-content {
+  width: 500px !important; 
+  max-width: 500px !important;
+}
