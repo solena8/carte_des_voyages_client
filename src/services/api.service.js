@@ -1,6 +1,5 @@
-import { API_CONFIG } from '../config/api.config.js';
-import { MapService } from './map.service.js';
-
+import { API_CONFIG } from "../config/api.config.js";
+import { MapService } from "./map.service.js";
 
 export class ApiService {
   static async loadPlaces(map) {
@@ -61,4 +60,29 @@ export class ApiService {
       throw error;
     }
   }
+
+  static async getStats() {
+    try {
+      const response = await fetch(`${API_CONFIG.MAIN.URL}/places/api/stats`);
+      if (!response.ok)
+        throw new Error("Erreur lors de la récupération des statistiques");
+
+      return await response.json();
+    } catch (error) {
+      console.error("Erreur:", error);
+      return { totalEntries: 0, uniqueCountries: 0 };
+    }
+  }
 }
+
+async function updateStats() {
+  const result = await ApiService.getStats();
+
+  document.getElementById(
+    "compteur"
+  ).innerText = `Nb de pays visités : ${result.uniqueCountries} \nNb de lits visités : ${result.totalEntries}`;
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  await updateStats();
+});

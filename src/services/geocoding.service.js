@@ -28,7 +28,7 @@ export class GeocodingService {
     addressInput.addEventListener("input", (e) => {
       clearTimeout(debounceTimer);
 
-      if (e.target.value.length < 3) {
+      if (e.target.value.length < 1) {
         suggestionsContainer.style.display = "none";
         return;
       }

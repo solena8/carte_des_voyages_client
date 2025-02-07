@@ -1,5 +1,3 @@
-
-
 export class PopupService {
   static createPopupContent(place) {
     return `
@@ -7,10 +5,8 @@ export class PopupService {
         <div class="popup-image" style="flex: 0 0 250px;">
           ${place.image ? this.createImageElement(place) : this.createPlaceholderElement()}
         </div>
-        <div class="popup-info" style="flex: 1; padding-right: 10px;">
+        <div class="popup-info" style="flex: 1; padding-right: 10px; display: flex; flex-direction: column; align-items: left;">
           ${this.createInfoContent(place)}
-        </div>
-        <div class="popup-delete" style="flex: 0 0 250px;">
           ${this.createDeleteButton(place)}
         </div>
       </div>
@@ -49,7 +45,7 @@ export class PopupService {
       <button 
         onclick="window.handlePlaceDelete(${place.id})" 
         class="delete-button" 
-        style="background-color: #ff4444; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">
+        style="background-color:rgb(208, 193, 193); color: white; padding: 8px 8px; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px; width: 50%; align-self: left;">
         Supprimer
       </button>
     `;

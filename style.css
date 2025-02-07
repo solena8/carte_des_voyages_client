@@ -17,6 +17,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Verdana, sans-serif; /* Utilisation de Verdana */
 }
 
 html, body {
@@ -43,6 +44,9 @@ html, body {
   flex: 1;
   min-width: 300px;
   padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg); /* Espace entre form et compteur */
 }
 
 /* ===== TYPOGRAPHY ===== */
@@ -58,14 +62,18 @@ h1 {
   height: 80vh;
   min-height: 300px;
   position: relative;
+  
   z-index: 1;
 }
+
+
 
 /* ===== FORM ===== */
 #placeForm {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg); /* Espacement avec le compteur */
 }
 
 label {
@@ -112,46 +120,40 @@ button[type="submit"]:hover {
 #preview {
   max-width: 200px;
   max-height: 150px;
-  margin-top: 10px;
+  margin-top: var(--spacing-md);
   display: none;
   object-fit: cover;
   border-radius: var(--border-radius);
 }
 
-
-/* ===== POPUP STYLES ===== */
-.leaflet-popup {
-  min-width: var(--container-width);
+/* ===== ESPACEMENT DU FORMULAIRE ===== */
+form label,
+form input,
+form .address-container,
+form .upload-button,
+form button {
+  display: block;
+  margin-bottom: var(--spacing-md);
 }
 
-.leaflet-popup-content-wrapper {
-  width: auto;
-  min-width: var(--container-width);
-  padding: var(--spacing-lg);
+/* Espacement entre l'input d'adresse et la div des suggestions */
+.address-container {
+  position: relative;
+  margin-bottom: var(--spacing-md);
 }
 
-.leaflet-popup-content {
-  width: 400px !important;
-  margin: 13px 24px !important;
+/* Espacement entre le formulaire et le compteur */
+#placeForm {
+  margin-bottom: var(--spacing-lg);
 }
 
-/* ===== PLACE DETAILS ===== */
-.place-details {
-  max-width: var(--container-width);
-  margin: var(--spacing-lg) auto;
-  padding: var(--spacing-lg);
+/* ===== COMPTEUR ===== */
+#compteur {
+  padding: var(--spacing-md);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
-}
-
-.info-line {
-  margin: var(--spacing-md) 0;
-  line-height: 1.6;
-}
-
-.info-line span {
-  font-weight: bold;
-  color: #666;
+  background: var(--background-light);
+  text-align: center;
 }
 
 /* ===== RESPONSIVE ===== */
@@ -171,52 +173,4 @@ button[type="submit"]:hover {
     height: 50vh;
     min-height: 250px;
   }
-
-  .leaflet-popup,
-  .leaflet-popup-content-wrapper {
-    min-width: 300px;
-  }
-}
-
-/* ===== LEAFLET OVERRIDES ===== */
-.leaflet-container {
-  background: var(--background-light) !important;
-}
-
-.leaflet-control-attribution {
-  font-size: 0.8rem !important;
-}
-
-.leaflet-touch .leaflet-control-zoom {
-  margin-right: var(--spacing-md) !important;
-  margin-bottom: var(--spacing-md) !important;
-}
-
-
-/* Styles pour l'autocomplétion d'adresse */
-.suggestions-container {
-  position: absolute;
-  width: 100%;
-  max-height: 200px;
-  overflow-y: auto;
-  background: white;
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  z-index: 1000;
-  display: none;
-}
-
-.suggestion-item {
-  padding: 8px 12px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.suggestion-item:hover {
-  background-color: var(--background-light);
-}
-
-.form-field {
-  position: relative;
 }

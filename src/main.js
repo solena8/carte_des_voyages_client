@@ -29,3 +29,4 @@ function initializeApp() {
 }
 
 document.addEventListener("DOMContentLoaded", initializeApp);
+
