@@ -1,22 +1,21 @@
-import { MapService } from './services/map.service.js';
-import { ApiService } from './services/api.service.js';
-import { FormHandler } from './components/form.js';
-import { ImageService } from './services/image.service.js';
-import { GeocodingService } from './services/geocoding.service.js';
+import { MapService } from "./services/map.service.js";
+import { ApiService } from "./services/api.service.js";
+import { FormHandler } from "./components/form.js";
+import { ImageService } from "./services/image.service.js";
+import { GeocodingService } from "./services/geocoding.service.js";
 
-
-// Fonction globale pour la suppression (nécessaire pour le onclick du bouton)
 window.handlePlaceDelete = async (id) => {
-  if (!confirm('Êtes-vous sûr de vouloir supprimer ce lieu ?')) {
+  if (!confirm("Êtes-vous sûr de vouloir supprimer ce lieu ?")) {
     return;
   }
 
   try {
     await ApiService.deletePlace(id);
+    await window.updateStats();
     const newMap = MapService.resetMap();
     await ApiService.loadPlaces(newMap);
   } catch (error) {
-    alert('Une erreur est survenue lors de la suppression');
+    alert("Une erreur est survenue lors de la suppression");
   }
 };
 
@@ -29,4 +28,3 @@ function initializeApp() {
 }
 
 document.addEventListener("DOMContentLoaded", initializeApp);
-

@@ -3,6 +3,7 @@ import { ApiService } from "../services/api.service.js";
 import { ImageService } from "../services/image.service.js";
 import { MapService } from "../services/map.service.js";
 
+
 export class FormHandler {
   static initializeFormSubmission(map) {
     const form = document.getElementById("placeForm");
@@ -31,8 +32,12 @@ export class FormHandler {
 
       const result = await ApiService.submitPlace(data);
       this.showSuccessMessage(result);
+      await window.updateStats();
       const newMap = MapService.resetMap();
       await ApiService.loadPlaces(newMap);
+
+      
+      
     } catch (error) {
       console.error("Erreur lors de la soumission:", error);
       alert("Une erreur est survenue lors de l'enregistrement");

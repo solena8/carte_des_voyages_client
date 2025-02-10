@@ -86,3 +86,5 @@ async function updateStats() {
 document.addEventListener("DOMContentLoaded", async () => {
   await updateStats();
 });
+
+window.updateStats = updateStats;
